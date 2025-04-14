@@ -34,7 +34,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   const filledStars = Math.floor(product.rating);
-  const hasHalfStar = product.rating % 1 !== 0;
 
   return (
     <div className="product-card">

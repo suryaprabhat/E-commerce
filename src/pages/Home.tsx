@@ -100,7 +100,7 @@ const Home: React.FC = () => {
                     <p>Quality products from trusted manufacturers</p>
                 </div>
                 <div className="brands-grid">
-                    {brands.map((brand, index) => (
+                    {brands.map((brand) => (
                         <div key={brand.name} className="brand-card">
                             <div className="brand-logo">
                                 <img src={brand.logo} alt={brand.name} />
