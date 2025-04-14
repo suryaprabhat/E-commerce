@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from "../data/products";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type ProductDetailsProps = {
     product: Product;
@@ -17,6 +19,24 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
 
     const handleQuantityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setQuantity(Number(event.target.value));
+    };
+
+    const handleAddToCart = () => {
+        toast.success(`${product.name} added to cart!`, {
+            position: "top-right",
+            autoClose: 2000,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+
+    const handleBuyNow = () => {
+        toast.info(`Redirecting to checkout...`, {
+            position: "top-right",
+            autoClose: 2000,
+            pauseOnHover: true,
+            draggable: true,
+        });
     };
 
     return (
@@ -115,8 +135,20 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
                         </div>
 
                         <div className="action-buttons">
-                            <button className="add-to-cart" disabled={!product.inStock}>Add to Cart</button>
-                            <button className="buy-now" disabled={!product.inStock}>Buy Now</button>
+                            <button
+                                className="add-to-cart"
+                                disabled={!product.inStock}
+                                onClick={handleAddToCart}
+                            >
+                                Add to Cart
+                            </button>
+                            <button
+                                className="buy-now"
+                                disabled={!product.inStock}
+                                onClick={handleBuyNow}
+                            >
+                                Buy Now
+                            </button>
                         </div>
                     </div>
 
@@ -149,6 +181,8 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
             <Link to="/" className="back-button">
                 ← Back to Products
             </Link>
+
+            <ToastContainer />
         </div>
     );
 };

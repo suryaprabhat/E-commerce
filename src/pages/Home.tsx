@@ -4,10 +4,6 @@ import { products } from '../data/products';
 import electronicsImg from '../assets/categories/electronics.webp';
 import furnitureImg from '../assets/categories/furniture.webp';
 import decorImg from '../assets/categories/decorbg.webp';
-import pepperfryLogo from '../assets/categories/pepperfry.png';
-import cromaLogo from '../assets/categories/croma.png';
-import fabindiaLogo from '../assets/categories/fabindia.png';
-import boatLogo from '../assets/categories/boat.png';
 
 const Home: React.FC = () => {
     // Get unique categories and their counts
@@ -25,12 +21,12 @@ const Home: React.FC = () => {
         products.filter(p => p.category === category).slice(0, 1)
     );
 
-    // Popular brands with logos (Updated with Indian Brands & Local Logos)
+    // Popular brands with logos
     const brands = [
-        { name: "Croma", logo: cromaLogo },
-        { name: "boAt (Techify)", logo: boatLogo },
-        { name: "Pepperfry", logo: pepperfryLogo },
-        { name: "FabIndia", logo: fabindiaLogo }
+        { name: "Nordic Design", logo: "https://ui-avatars.com/api/?name=Nordic+Design&background=6366F1&color=fff&size=128&bold=true&format=svg" },
+        { name: "Techify", logo: "https://ui-avatars.com/api/?name=Techify&background=EC4899&color=fff&size=128&bold=true&format=svg" },
+        { name: "EcoHome", logo: "https://ui-avatars.com/api/?name=EcoHome&background=8B5CF6&color=fff&size=128&bold=true&format=svg" },
+        { name: "LuxeLiving", logo: "https://ui-avatars.com/api/?name=Luxe+Living&background=3B82F6&color=fff&size=128&bold=true&format=svg" }
     ];
 
     return (
@@ -80,7 +76,7 @@ const Home: React.FC = () => {
                     <p>Our most popular products and trending items</p>
                 </div>
                 <div className="featured-grid">
-                    {featuredProducts.map((product) => (
+                    {featuredProducts.map((product, index) => (
                         <div key={product.id} className="featured-card">
                             <div className="featured-image-container">
                                 <img src={product.images[0]} alt={product.name} className="featured-image" />
@@ -100,7 +96,7 @@ const Home: React.FC = () => {
                     <p>Quality products from trusted manufacturers</p>
                 </div>
                 <div className="brands-grid">
-                    {brands.map((brand) => (
+                    {brands.map((brand, index) => (
                         <div key={brand.name} className="brand-card">
                             <div className="brand-logo">
                                 <img src={brand.logo} alt={brand.name} />

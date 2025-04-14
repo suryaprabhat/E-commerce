@@ -1,3 +1,6 @@
+import decorbgImage from '../assets/categories/decorbg.webp';
+import furnitureImage from '../assets/categories/furniture.webp';
+import electronicsImage from '../assets/categories/electronics.webp';
 import clockImage from '../assets/categories/Clock.jpeg';
 
 export interface Product {
