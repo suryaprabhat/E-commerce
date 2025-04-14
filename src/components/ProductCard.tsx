@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Product } from "../data/products";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface ProductCardProps {
   product: Product;
@@ -21,19 +22,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigation when clicking the button
-    // Add to cart functionality will be implemented later
-    alert('Added to cart!');
+    e.preventDefault();
+    e.stopPropagation();
+    toast.success(`${product.name} added to cart!`);
   };
 
   const handleBuyNow = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigation when clicking the button
-    // Buy now functionality will be implemented later
-    alert('Proceeding to checkout!');
+    e.preventDefault();
+    e.stopPropagation();
+    toast.info(`Proceeding to checkout...`);
   };
 
   const filledStars = Math.floor(product.rating);
-  const hasHalfStar = product.rating % 1 !== 0;
 
   return (
     <Link to={`/details/${product.id}`} className="product-card">
@@ -44,7 +44,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
         )}
         <img
-          src={imgError ? `https://source.unsplash.com/500x500/?${product.name.toLowerCase().replace(/ /g, '-')}` : product.images[0]}
+          src={
+            imgError
+              ? `https://source.unsplash.com/500x500/?${product.name.toLowerCase().replace(/ /g, '-')}`
+              : product.images[0]
+          }
           alt={product.name}
           onError={handleImageError}
           onLoad={handleImageLoad}
@@ -52,6 +56,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         />
         {!product.inStock && <div className="out-of-stock-badge">Out of Stock</div>}
       </div>
+
       <div className="product-info">
         <h3 className="product-name">{product.name}</h3>
         <p className="product-category">{product.category}</p>
@@ -69,6 +74,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <span className="reviews">({product.reviews})</span>
           </div>
         </div>
+
         <div className="product-card-buttons">
           <button
             className="add-to-cart-btn"
@@ -86,6 +92,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </button>
         </div>
       </div>
+
+      {/* Toast notifications container at top-center */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
     </Link>
   );
 };

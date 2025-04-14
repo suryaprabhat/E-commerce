@@ -5,11 +5,27 @@ import { Details } from "./pages/Details";
 import "./styles/layout.css";
 import "./styles/components.css";
 import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <Router>
       <div className="app-container">
+        {/* Global toast container */}
+        <ToastContainer
+  position="top-center"
+  autoClose={2000}
+  hideProgressBar={false}
+  newestOnTop={true}
+  closeOnClick
+  rtl={false}
+  pauseOnFocusLoss
+  draggable
+  pauseOnHover
+  theme="light"
+  className="custom-toast-container"
+/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -21,4 +37,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;

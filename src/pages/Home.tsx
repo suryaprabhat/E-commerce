@@ -76,7 +76,7 @@ const Home: React.FC = () => {
                     <p>Our most popular products and trending items</p>
                 </div>
                 <div className="featured-grid">
-                    {featuredProducts.map((product, index) => (
+                    {featuredProducts.map((product) => (
                         <div key={product.id} className="featured-card">
                             <div className="featured-image-container">
                                 <img src={product.images[0]} alt={product.name} className="featured-image" />
@@ -96,7 +96,7 @@ const Home: React.FC = () => {
                     <p>Quality products from trusted manufacturers</p>
                 </div>
                 <div className="brands-grid">
-                    {brands.map((brand, index) => (
+                    {brands.map((brand) => (
                         <div key={brand.name} className="brand-card">
                             <div className="brand-logo">
                                 <img src={brand.logo} alt={brand.name} />
