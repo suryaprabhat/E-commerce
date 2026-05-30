@@ -1,54 +1,106 @@
-# React + TypeScript + Vite
+# 🛍️ Elegant Living — E-Commerce Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack e-commerce application built with React, Node.js, Express, and MongoDB.
 
-Currently, two official plugins are available:
+## ✅ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Product Catalog** — Browse products by category, search, and sort
+- **Add to Cart & Checkout** — Real cart state, shipping form, order placement
+- **User Authentication** — Register / Login with JWT-based sessions
+- **Role-Based Access** — Admin and User roles with protected routes
+- **Backend REST APIs** — Full CRUD for products and orders
+- **Database Integration** — MongoDB (Atlas) via Mongoose
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 19, TypeScript, Vite |
+| Backend | Node.js, Express |
+| Database | MongoDB (Atlas) via Mongoose |
+| Auth | JWT (JSON Web Tokens) + bcryptjs |
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js v18+
+- A [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account (free tier works)
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/suryaprabhat/E-commerce.git
+cd E-commerce
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Setup the Backend
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Edit .env and add your MongoDB Atlas connection string
+npm run dev
+```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+The backend will start on `http://localhost:5000` and auto-seed the database with:
+- 12 sample products
+- Admin account: `admin@shop.com` / `Admin@123`
+- Demo user: `user@shop.com` / `User@123`
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 3. Setup the Frontend
+```bash
+# From the root E-commerce directory
+npm install
+npm run dev
+```
+
+The frontend will start on `http://localhost:5173`.
+
+## 🔑 Demo Accounts
+
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@shop.com | Admin@123 |
+| User | user@shop.com | User@123 |
+
+## 📡 API Endpoints
+
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Register new user |
+| POST | `/api/auth/login` | Login and get JWT |
+
+### Products
+| Method | Endpoint | Access |
+|--------|----------|--------|
+| GET | `/api/products` | Public |
+| GET | `/api/products/:id` | Public |
+| POST | `/api/products` | Admin only |
+| PUT | `/api/products/:id` | Admin only |
+| DELETE | `/api/products/:id` | Admin only |
+
+### Orders
+| Method | Endpoint | Access |
+|--------|----------|--------|
+| POST | `/api/orders` | Auth users |
+| GET | `/api/orders/my` | Auth users (own orders) |
+| GET | `/api/orders` | Admin only |
+| PUT | `/api/orders/:id/status` | Admin only |
+
+## 📁 Project Structure
+
+```
+E-commerce/
+├── src/                    # React frontend
+│   ├── components/         # Reusable UI components
+│   ├── context/            # AuthContext, CartContext
+│   ├── pages/              # Login, Register, Cart, Checkout, Orders, Admin
+│   ├── lib/api.ts          # Axios instance
+│   └── styles/             # CSS files
+│
+└── backend/                # Node.js + Express API
+    ├── models/             # User, Product, Order schemas
+    ├── routes/             # auth, products, orders
+    ├── middleware/         # JWT auth, role guard
+    └── server.js           # Entry point
 ```

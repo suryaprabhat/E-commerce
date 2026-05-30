@@ -1,0 +1,78 @@
+/* ===================== ORDERS PAGE ===================== */
+.orders-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: calc(100vh - 64px);
+}
+.orders-page h1 { font-size: 1.8rem; font-weight: 700; color: #1a1a2e; margin-bottom: 2rem; }
+
+.orders-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.order-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.order-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+  background: #fafafa;
+}
+
+.order-id { font-size: 0.95rem; font-weight: 700; color: #1a1a2e; margin: 0 0 0.2rem; }
+.order-date { font-size: 0.82rem; color: #9ca3af; margin: 0; }
+
+.order-status-badge {
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  letter-spacing: 0.3px;
+}
+
+.order-items { padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+
+.order-item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.order-item-img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.order-item-name { flex: 1; font-size: 0.92rem; color: #374151; }
+.order-item-qty { color: #9ca3af; font-size: 0.85rem; }
+.order-item-price { font-weight: 600; color: #1a1a2e; font-size: 0.92rem; }
+
+.order-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #f3f4f6;
+  background: #fafafa;
+}
+.order-address { font-size: 0.82rem; color: #6b7280; margin: 0; flex: 1; }
+.order-total { font-size: 0.95rem; color: #1a1a2e; margin: 0; white-space: nowrap; }
+.order-total strong { color: #6366f1; }
+
+.orders-loading, .orders-error, .orders-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6b7280;
+}
+.orders-empty-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+.orders-empty h2 { font-size: 1.4rem; color: #1a1a2e; margin-bottom: 0.5rem; }

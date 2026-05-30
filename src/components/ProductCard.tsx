@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
-import { Product } from "../data/products";
-import { Link } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useCart } from '../context/CartContext';
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  rating: number;
+  reviews: number;
+  inStock: boolean;
+  images: string[];
+}
 
 interface ProductCardProps {
   product: Product;
@@ -11,47 +22,26 @@ interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [imgError, setImgError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  const handleImageError = () => {
-    setImgError(true);
-    setIsLoading(false);
-  };
-
-  const handleImageLoad = () => {
-    setIsLoading(false);
-  };
+  const { addToCart } = useCart();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    toast.success(`${product.name} added to cart!`);
-  };
-
-  const handleBuyNow = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toast.info(`Proceeding to checkout...`);
+    addToCart({ productId: product._id, name: product.name, price: product.price, image: product.images[0] || '' });
+    toast.success(`${product.name} added to cart! 🛒`);
   };
 
   const filledStars = Math.floor(product.rating);
 
   return (
-    <Link to={`/details/${product.id}`} className="product-card">
+    <Link to={`/details/${product._id}`} className="product-card">
       <div className="product-image-container">
-        {isLoading && (
-          <div className="loading-spinner">
-            <div className="spinner"></div>
-          </div>
-        )}
+        {isLoading && <div className="loading-spinner"><div className="spinner"></div></div>}
         <img
-          src={
-            imgError
-              ? `https://source.unsplash.com/500x500/?${product.name.toLowerCase().replace(/ /g, '-')}`
-              : product.images[0]
-          }
+          src={imgError ? `https://placehold.co/500x500/1a1a2e/e1e1e1?text=${encodeURIComponent(product.name)}` : product.images[0]}
           alt={product.name}
-          onError={handleImageError}
-          onLoad={handleImageLoad}
+          onError={() => { setImgError(true); setIsLoading(false); }}
+          onLoad={() => setIsLoading(false)}
           className={`product-image ${isLoading ? 'loading' : 'loaded'}`}
         />
         {!product.inStock && <div className="out-of-stock-badge">Out of Stock</div>}
@@ -61,13 +51,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <h3 className="product-name">{product.name}</h3>
         <p className="product-category">{product.category}</p>
         <div className="product-price-rating">
-          <p className="price">₹{product.price.toFixed(2)}</p>
+          <p className="price">₹{product.price.toLocaleString('en-IN')}</p>
           <div className="rating">
             <div className="stars">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className={`star ${i < filledStars ? 'filled' : ''}`}>
-                  ★
-                </span>
+                <span key={i} className={`star ${i < filledStars ? 'filled' : ''}`}>★</span>
               ))}
             </div>
             <span className="rating-value">{product.rating.toFixed(1)}</span>
@@ -80,28 +68,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             className="add-to-cart-btn"
             onClick={handleAddToCart}
             disabled={!product.inStock}
+            id={`add-to-cart-${product._id}`}
           >
             Add to Cart
           </button>
-          <button
+          <Link
+            to={`/details/${product._id}`}
             className="buy-now-btn"
-            onClick={handleBuyNow}
-            disabled={!product.inStock}
+            onClick={(e) => e.stopPropagation()}
           >
-            Buy Now
-          </button>
+            View Details
+          </Link>
         </div>
       </div>
-
-      {/* Toast notifications container at top-center */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-      />
     </Link>
   );
 };
